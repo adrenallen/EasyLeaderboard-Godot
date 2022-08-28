@@ -7,7 +7,7 @@ signal leaderboard_score_submitted
 @export var easy_leaderboard_url  : String = "https://lb.userdefined.io"
 
 @export var game_name : String = "easy-leaderboard-example"
-@export var leaderboard_asc : bool = false
+@export var sort_results_ascending : bool = false
 
 # TODO - implement this
 #@export var page_size : int = 10
@@ -21,16 +21,11 @@ func get_leaderboard_results():
 # emits the `leaderboard_score_submitted` signal when complete
 func submit_leaderboard_score(score_name, score_value, score_metadata = null, score_validation = null):
 	_submit_leaderboard_score(score_name, score_value, score_metadata, score_validation)
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 	
 func _refresh_leaderboard():
 	# TODO - Build the URL more nicely
 	$GetLeaderboardRequest.request(
-		easy_leaderboard_url + "/games/" + game_name + "?asc=" + str(leaderboard_asc).to_lower(),
+		easy_leaderboard_url + "/games/" + game_name + "?asc=" + str(sort_results_ascending).to_lower(),
 		[],
 		false,
 		HTTPClient.METHOD_GET
