@@ -1,0 +1,106 @@
+[gd_scene load_steps=3 format=3 uid="uid://mogv5vq2y7bt"]
+
+[ext_resource type="Texture2D" uid="uid://ca2itby6ttvwy" path="res://leaderboard/trophies.png" id="1"]
+
+[sub_resource type="GDScript" id="1"]
+script/source = "extends Panel
+
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = \"text\"
+@export var world_seed : String
+@export var world_name : String
+@export var position = 1
+@export var username = \"Failed to load\"
+@export var score = 0
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	$Position.text = str(position)
+	$Name/Label.text = str(username)
+	$Score/Label.text = str(score)
+	
+	if int(position) < 4:
+		$Position.visible = false
+		$trophies.visible = true
+		$trophies.frame = int(position)-1
+	else:
+		$Position.visible = true
+		$trophies.visible = false
+		
+	if not world_seed:
+		$WorldSeed.visible = false
+	else:
+		$WorldSeed/PlaySeedButton.text = \"Play \" + world_seed
+		
+	if not world_name:
+		$WorldName.visible = false
+	else:
+		$WorldName/Label.text = world_name
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+
+func _on_PlaySeedButton_pressed():
+	Seed.world_seed = world_seed
+	get_tree().change_scene(\"res://Game.tscn\")
+"
+
+[node name="Panel" type="Panel"]
+self_modulate = Color(0.968627, 0.647059, 0.14902, 1)
+grow_horizontal = 0
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = SubResource("1")
+
+[node name="bg" type="Sprite2D" parent="."]
+self_modulate = Color(0, 0.298039, 0.509804, 1)
+position = Vector2(2, 2)
+scale = Vector2(521, 46)
+centered = false
+
+[node name="Position" type="Label" parent="."]
+text = "#1"
+
+[node name="Score" type="Node2D" parent="."]
+modulate = Color(1, 1, 1, 0.784314)
+position = Vector2(37.5444, 10.4077)
+
+[node name="Label" type="Label" parent="Score"]
+text = "42000"
+clip_text = true
+
+[node name="Name" type="Node2D" parent="."]
+position = Vector2(88.5669, 19.0474)
+
+[node name="Label" type="Label" parent="Name"]
+text = "Johnson McJohnson the man himselfas"
+clip_text = true
+
+[node name="WorldName" type="Node2D" parent="."]
+position = Vector2(359, 31)
+
+[node name="Label" type="Label" parent="WorldName"]
+text = "BUTTERY SPRAY HOLE"
+clip_text = true
+
+[node name="WorldSeed" type="Node2D" parent="."]
+position = Vector2(268, 16)
+scale = Vector2(0.8, 0.8)
+
+[node name="PlaySeedButton" type="Button" parent="WorldSeed"]
+disabled = true
+text = "Seed 1981769745"
+
+[node name="trophies" type="Sprite2D" parent="."]
+position = Vector2(18.4673, 23.7108)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("1")
+hframes = 3
+
+[connection signal="pressed" from="WorldSeed/PlaySeedButton" to="." method="_on_PlaySeedButton_pressed"]

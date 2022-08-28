@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://ch5ejunjgd2h3"]
+
+[ext_resource type="PackedScene" uid="uid://ydns5n7jbjna" path="res://EasyLeaderboard.tscn" id="1_lwcop"]
+
+[sub_resource type="GDScript" id="GDScript_8y05b"]
+script/source = "extends Node2D
+
+
+var lb : EasyLeaderboard
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	lb = $EasyLeaderboard
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+
+func _on_test_submit_button_pressed():
+	lb.submit_leaderboard_score(\"Garrett\", 123, {\"metaData\" = \"yo\"})
+
+
+func _on_test_retrieve_button_pressed():
+	lb.get_leaderboard_results()
+
+
+func _on_easy_leaderboard_leaderboard_results_changed(results):
+	print(results)
+
+
+func _on_easy_leaderboard_leaderboard_score_submitted():
+	print(\"Submit done\")
+"
+
+[node name="Node2D" type="Node2D"]
+script = SubResource("GDScript_8y05b")
+
+[node name="EasyLeaderboard" parent="." instance=ExtResource("1_lwcop")]
+
+[node name="TestSubmitButton" type="Button" parent="."]
+offset_left = 237.0
+offset_top = 130.0
+offset_right = 317.0
+offset_bottom = 183.0
+text = "SUBMIT"
+
+[node name="TestRetrieveButton" type="Button" parent="."]
+offset_left = 527.0
+offset_top = 102.0
+offset_right = 717.0
+offset_bottom = 200.0
+text = "RETRIEVE"
+
+[connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]
+[connection signal="leaderboard_score_submitted" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_score_submitted"]
+[connection signal="pressed" from="TestSubmitButton" to="." method="_on_test_submit_button_pressed"]
+[connection signal="pressed" from="TestRetrieveButton" to="." method="_on_test_retrieve_button_pressed"]
