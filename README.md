@@ -2,12 +2,14 @@
 
 ## Features
 
-### EasyLeaderboard Node
+### EasyLeaderboard System
+
 
 ### Score Submission Modal
+TODO
 
 ### Full Leadboard Scene
-
+TODO
 
 ## Usage
 ### Using the User Defined hosted solution

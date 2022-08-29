@@ -67,6 +67,7 @@ func _submit_leaderboard_score(score_name, score_value, score_metadata = {}, sco
 
 func _on_submit_score_request_request_completed(result, response_code, headers, body):
 	if response_code != 200:
+		# TODO - handle this better
 		push_error("Error in submit score HTTP response. Got code ", response_code, " and body ", body.get_string_from_utf8())
 	else:
 		leaderboard_score_submitted.emit()
