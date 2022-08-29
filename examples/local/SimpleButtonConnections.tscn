@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bucgatcv6a6o5"]
+
+[ext_resource type="PackedScene" uid="uid://cbidvjbt20eoj" path="res://examples/SimpleButtonConnections.tscn" id="1_0o3j7"]
+
+[node name="SimpleButtonConnections" type="Node2D"]
+
+[node name="Node2D" parent="." instance=ExtResource("1_0o3j7")]
+
+[node name="EasyLeaderboard" parent="Node2D" index="0"]
+easy_leaderboard_url = "http://localhost:6969"
+
+[editable path="Node2D"]

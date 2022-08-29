@@ -32,7 +32,7 @@ func _on_easy_leaderboard_leaderboard_score_submitted():
 	print(\"Submit done\")
 "
 
-[node name="Node2D" type="Node2D"]
+[node name="SimpleButtonConnectionsExample" type="Node2D"]
 script = SubResource("GDScript_8y05b")
 
 [node name="EasyLeaderboard" parent="." instance=ExtResource("1_lwcop")]
