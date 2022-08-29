@@ -32,7 +32,7 @@ func _refresh_leaderboard():
 	)
 
 
-func _on_get_leaderboard_request_request_completed(result, response_code, headers, body):
+func _on_get_leaderboard_request_request_completed(_result, response_code, _headers, body):
 
 	var response_body = body.get_string_from_utf8()
 	
@@ -61,11 +61,13 @@ func _submit_leaderboard_score(score_name, score_value, score_metadata = {}, sco
 	# we have a value to send
 	if score_validation:
 		request["validation"] = score_validation
+	else:
+		request["validation"] = json.stringify(request).sha256_text()
 	
 	$SubmitScoreRequest.request(easy_leaderboard_url + "/games/submit", ['Content-Type: application/json'], false, HTTPClient.METHOD_POST, json.stringify(request))
 
 
-func _on_submit_score_request_request_completed(result, response_code, headers, body):
+func _on_submit_score_request_request_completed(_result, response_code, _headers, body):
 	if response_code != 200:
 		# TODO - handle this better
 		push_error("Error in submit score HTTP response. Got code ", response_code, " and body ", body.get_string_from_utf8())

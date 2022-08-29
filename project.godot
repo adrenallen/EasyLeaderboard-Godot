@@ -12,7 +12,7 @@ _global_script_classes=[{
 "base": "Node",
 "class": &"EasyLeaderboard",
 "language": &"GDScript",
-"path": "res://EasyLeaderboard.gd"
+"path": "res://api/EasyLeaderboard.gd"
 }]
 _global_script_class_icons={
 "EasyLeaderboard": ""

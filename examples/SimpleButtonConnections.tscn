@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://ch5ejunjgd2h3"]
+[gd_scene load_steps=3 format=3 uid="uid://cbidvjbt20eoj"]
 
-[ext_resource type="PackedScene" uid="uid://ydns5n7jbjna" path="res://EasyLeaderboard.tscn" id="1_lwcop"]
+[ext_resource type="PackedScene" uid="uid://dyc75iewallhd" path="res://api/EasyLeaderboard.tscn" id="1_lwcop"]
 
 [sub_resource type="GDScript" id="GDScript_8y05b"]
 script/source = "extends Node2D
@@ -12,24 +12,23 @@ func _ready():
 	lb = $EasyLeaderboard
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
 func _on_test_submit_button_pressed():
+	($TestSubmitButton as Button).disabled = true
 	lb.submit_leaderboard_score(\"Garrett\", 123, {\"metaData\" = \"yo\"})
 
-
 func _on_test_retrieve_button_pressed():
+	($TestRetrieveButton as Button).disabled = true
 	lb.get_leaderboard_results()
+	
 
 
 func _on_easy_leaderboard_leaderboard_results_changed(results):
+	($TestRetrieveButton as Button).disabled = false
 	print(results)
 
 
 func _on_easy_leaderboard_leaderboard_score_submitted():
+	($TestSubmitButton as Button).disabled = false
 	print(\"Submit done\")
 "
 
@@ -39,17 +38,17 @@ script = SubResource("GDScript_8y05b")
 [node name="EasyLeaderboard" parent="." instance=ExtResource("1_lwcop")]
 
 [node name="TestSubmitButton" type="Button" parent="."]
-offset_left = 237.0
-offset_top = 130.0
-offset_right = 317.0
-offset_bottom = 183.0
+offset_left = 355.0
+offset_top = 285.0
+offset_right = 455.0
+offset_bottom = 335.0
 text = "SUBMIT"
 
 [node name="TestRetrieveButton" type="Button" parent="."]
-offset_left = 527.0
-offset_top = 102.0
-offset_right = 717.0
-offset_bottom = 200.0
+offset_left = 538.0
+offset_top = 286.0
+offset_right = 638.0
+offset_bottom = 336.0
 text = "RETRIEVE"
 
 [connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]
