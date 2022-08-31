@@ -40,5 +40,7 @@ Shows a traditional arcade style score.
 ### [Speed Blocks](https://garrettmakesgames.itch.io/speed-blocks)
 Shows highest scores along with metadata about each score like max multiplier, total blocks placed, and average time to place a block.
 
+This game also uses  metadata from the gameplay with a custom validator to prevent cheating!
+
 ### [Glitch Sweeper](https://garrettmakesgames.itch.io/glitch-sweeper)
 Shows top 10 fastest times to clear the board
