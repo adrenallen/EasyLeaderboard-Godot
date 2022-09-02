@@ -14,7 +14,7 @@ func _ready():
 
 func _on_test_submit_button_pressed():
 	($TestSubmitButton as Button).disabled = true
-	lb.submit_leaderboard_score(\"Garrett\", 123, {\"metaData\" = \"yo\"})
+	lb.submit_leaderboard_score(\"Garrett\", 1003, {\"metaData\" = \"yo\"})
 
 func _on_test_retrieve_button_pressed():
 	($TestRetrieveButton as Button).disabled = true
@@ -27,9 +27,9 @@ func _on_easy_leaderboard_leaderboard_results_changed(results):
 	print(results)
 
 
-func _on_easy_leaderboard_leaderboard_score_submitted():
+func _on_easy_leaderboard_leaderboard_score_submitted(result):
 	($TestSubmitButton as Button).disabled = false
-	print(\"Submit done\")
+	print(result)
 "
 
 [node name="SimpleButtonConnectionsExample" type="Node2D"]

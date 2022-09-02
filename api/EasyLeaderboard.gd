@@ -63,13 +63,24 @@ func _submit_leaderboard_score(score_name, score_value, score_metadata = {}, sco
 		request["validation"] = score_validation
 	else:
 		request["validation"] = json.stringify(request).sha256_text()
-	
+
 	$SubmitScoreRequest.request(easy_leaderboard_url + "/games/submit", ['Content-Type: application/json'], false, HTTPClient.METHOD_POST, json.stringify(request))
 
 
 func _on_submit_score_request_request_completed(_result, response_code, _headers, body):
+	
+	var response_body = body.get_string_from_utf8()
+	
+	# TODO - handle a non-successful response code!
 	if response_code != 200:
-		# TODO - handle this better
 		push_error("Error in submit score HTTP response. Got code ", response_code, " and body ", body.get_string_from_utf8())
+		return
+	
+	var json = JSON.new()
+	var error = json.parse(response_body)
+	if error == OK:
+		leaderboard_score_submitted.emit(json.get_data())
 	else:
-		leaderboard_score_submitted.emit()
+		# TODO - handle json error!
+		push_error("JSON Parse Error: ", json.get_error_message(), " in ", response_body, " at line ", json.get_error_line())
+		

@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://qtd4jtukqvh3"]
+
+[ext_resource type="PackedScene" uid="uid://dyc75iewallhd" path="res://api/EasyLeaderboard.tscn" id="1_f4dny"]
+
+[sub_resource type="GDScript" id="GDScript_7ko77"]
+script/source = "extends Control
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[node name="Leaderboard" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = SubResource("GDScript_7ko77")
+
+[node name="EasyLeaderboard" parent="." instance=ExtResource("1_f4dny")]
