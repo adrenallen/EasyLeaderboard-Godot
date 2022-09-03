@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://qtd4jtukqvh3"]
+[gd_scene load_steps=4 format=3 uid="uid://qtd4jtukqvh3"]
 
 [ext_resource type="PackedScene" uid="uid://dyc75iewallhd" path="res://api/EasyLeaderboard.tscn" id="1_f4dny"]
+[ext_resource type="PackedScene" uid="uid://c0t0hiwfc7xfe" path="res://leaderboard/LeaderboardScoreSubmitPanel.tscn" id="2_3bnnd"]
 
 [sub_resource type="GDScript" id="GDScript_7ko77"]
 script/source = "extends Control
@@ -19,12 +20,12 @@ script/source = "extends Control
 
 @onready var results_container : GridContainer = $LeadboardPanel/ResultsGridContainer
 @onready var easy_leaderboard_api : EasyLeaderboard = $EasyLeaderboard
-@onready var prev_button : Button = $LeadboardPanel/GridContainer/PrevButtonContainer/PrevButton
+@onready var prev_button : Button = $LeadboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton
 @onready var next_button : Button = $LeadboardPanel/HeaderGridContainer/NextButtonContainer/NextButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	easy_leaderboard_api.get_leaderboard_results()
+	_refresh_results()
 	$LeadboardPanel/HeaderGridContainer/LeaderboardTitle.text = leaderboard_title
 	
 
@@ -48,10 +49,34 @@ func _on_easy_leaderboard_leaderboard_results_changed(results):
 		row.score_value = result.score
 		
 		results_container.add_child(row)
+		
+	next_button.disabled = len(results) < page_size
+	prev_button.disabled = current_page <= 1
 
 
 func _on_easy_leaderboard_leaderboard_score_submitted():
 	pass # Replace with function body.
+
+
+func _on_next_button_pressed():	
+	current_page = current_page + 1
+	_refresh_results()
+
+func _on_prev_button_pressed():
+	current_page = current_page - 1
+	_refresh_results()
+	
+func _refresh_results():
+	next_button.disabled = true
+	prev_button.disabled = true
+	
+	easy_leaderboard_api.current_page = current_page
+	easy_leaderboard_api.page_size = page_size
+	easy_leaderboard_api.game_name = game_name
+	easy_leaderboard_api.sort_results_ascending = sort_results_asc
+	
+	easy_leaderboard_api.get_leaderboard_results()
+
 "
 
 [node name="Leaderboard" type="Control"]
@@ -70,8 +95,9 @@ offset_bottom = 621.0
 
 [node name="HeaderGridContainer" type="GridContainer" parent="LeadboardPanel"]
 layout_mode = 0
+offset_top = 10.0
 offset_right = 643.0
-offset_bottom = 33.0
+offset_bottom = 43.0
 columns = 3
 
 [node name="PrevButtonContainer" type="CenterContainer" parent="LeadboardPanel/HeaderGridContainer"]
@@ -116,9 +142,9 @@ text = "Next"
 
 [node name="ResultsGridContainer" type="GridContainer" parent="LeadboardPanel"]
 layout_mode = 0
-offset_left = 4.0
+offset_left = 1.0
 offset_top = 48.0
-offset_right = 639.0
+offset_right = 644.0
 offset_bottom = 538.0
 
 [node name="FooterGridContainer" type="GridContainer" parent="LeadboardPanel"]
@@ -128,5 +154,10 @@ offset_top = 561.0
 offset_right = 636.0
 offset_bottom = 601.0
 
+[node name="LeaderboardScoreSubmitPanel" parent="." instance=ExtResource("2_3bnnd")]
+layout_mode = 0
+
 [connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]
 [connection signal="leaderboard_score_submitted" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_score_submitted"]
+[connection signal="pressed" from="LeadboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton" to="." method="_on_prev_button_pressed"]
+[connection signal="pressed" from="LeadboardPanel/HeaderGridContainer/NextButtonContainer/NextButton" to="." method="_on_next_button_pressed"]

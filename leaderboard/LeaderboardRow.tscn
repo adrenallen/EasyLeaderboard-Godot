@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c8fa1chs2ltej"]
 
-[sub_resource type="GDScript" id="GDScript_kqgav"]
+[sub_resource type="GDScript" id="GDScript_fcf7m"]
 script/source = "extends GridContainer
 
 @export var result_number : int
@@ -9,7 +9,7 @@ script/source = "extends GridContainer
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$RowNumberContainer/Label.text = str(result_number)
+	$RowNumberContainer/Label.text = \"#\" + str(result_number)
 	$ScoreName/Label.text = score_name
 	$ScoreValue/Label.text = str(score_value)
 
@@ -19,14 +19,14 @@ func _process(delta):
 	pass
 "
 
-[node name="LeaderboardRow" type="GridContainer"]
+[node name="GridContainer" type="GridContainer"]
 offset_left = 20.0
 offset_right = 619.0
 offset_bottom = 52.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 3
-script = SubResource("GDScript_kqgav")
+script = SubResource("GDScript_fcf7m")
 
 [node name="RowNumberContainer" type="CenterContainer" parent="."]
 custom_minimum_size = Vector2(32, 0)

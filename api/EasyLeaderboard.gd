@@ -12,6 +12,9 @@ const DEFAULT_SORT_RESULTS_ASCENDING = false
 @export var game_name : String = DEFAULT_GAME_NAME
 @export var sort_results_ascending : bool = DEFAULT_SORT_RESULTS_ASCENDING
 
+@export var page_size : int = 10
+@export var current_page : int = 1
+
 # TODO - implement this
 #@export var page_size : int = 10
 
@@ -26,9 +29,16 @@ func submit_leaderboard_score(score_name, score_value, score_metadata = null, sc
 	_submit_leaderboard_score(score_name, score_value, score_metadata, score_validation)
 	
 func _refresh_leaderboard():
+	
+	# Build the query params
+	var params : String = "?"
+	params += "asc=" + str(sort_results_ascending).to_lower()
+	params += "&pagesize=" + str(page_size)
+	params += "&page=" + str(current_page)
+	
 	# TODO - Build the URL more nicely
 	$GetLeaderboardRequest.request(
-		easy_leaderboard_url + "/games/" + game_name + "?asc=" + str(sort_results_ascending).to_lower(),
+		easy_leaderboard_url + "/games/" + game_name + params,
 		[],
 		false,
 		HTTPClient.METHOD_GET
