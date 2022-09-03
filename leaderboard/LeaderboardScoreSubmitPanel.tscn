@@ -6,6 +6,10 @@ extends Panel
 
 signal leaderboard_score_submitted(result)
 
+## EasyLeaderboard API node
+@export 
+var easy_leaderboard_api : Node
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

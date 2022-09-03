@@ -17,7 +17,6 @@ script/source = "extends Control
 @export var game_name = EasyLeaderboard.DEFAULT_GAME_NAME
 @export var sort_results_asc = EasyLeaderboard.DEFAULT_SORT_RESULTS_ASCENDING
 
-
 @onready var results_container : GridContainer = $LeadboardPanel/ResultsGridContainer
 @onready var easy_leaderboard_api : EasyLeaderboard = $EasyLeaderboard
 @onready var prev_button : Button = $LeadboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton
@@ -25,6 +24,7 @@ script/source = "extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	add_child(easy_leaderboard_api)
 	_refresh_results()
 	$LeadboardPanel/HeaderGridContainer/LeaderboardTitle.text = leaderboard_title
 	
@@ -155,6 +155,7 @@ offset_right = 636.0
 offset_bottom = 601.0
 
 [node name="LeaderboardScoreSubmitPanel" parent="." instance=ExtResource("2_3bnnd")]
+visible = false
 layout_mode = 0
 
 [connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]

@@ -41,24 +41,22 @@ text = "2"
 
 [node name="ScoreName" type="CenterContainer" parent="."]
 offset_left = 36.0
-offset_right = 316.0
+offset_right = 540.0
 offset_bottom = 26.0
 size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="ScoreName"]
-offset_left = 135.0
-offset_right = 145.0
+offset_left = 247.0
+offset_right = 257.0
 offset_bottom = 26.0
 text = "2"
 
 [node name="ScoreValue" type="CenterContainer" parent="."]
-offset_left = 320.0
+offset_left = 544.0
 offset_right = 599.0
 offset_bottom = 26.0
-size_flags_horizontal = 3
 
 [node name="Label" type="Label" parent="ScoreValue"]
-offset_left = 112.0
-offset_right = 167.0
+offset_right = 55.0
 offset_bottom = 26.0
 text = "123456"
