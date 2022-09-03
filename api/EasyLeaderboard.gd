@@ -4,10 +4,13 @@ extends Node
 signal leaderboard_results_changed(results)
 signal leaderboard_score_submitted
 
-@export var easy_leaderboard_url  : String = "https://lb.userdefined.io"
+const DEFAULT_EASY_LEADERBOARD_URL = "https://lb.userdefined.io"
+const DEFAULT_GAME_NAME = "easy-leaderboard-example"
+const DEFAULT_SORT_RESULTS_ASCENDING = false
 
-@export var game_name : String = "easy-leaderboard-example"
-@export var sort_results_ascending : bool = false
+@export var easy_leaderboard_url  : String = DEFAULT_EASY_LEADERBOARD_URL
+@export var game_name : String = DEFAULT_GAME_NAME
+@export var sort_results_ascending : bool = DEFAULT_SORT_RESULTS_ASCENDING
 
 # TODO - implement this
 #@export var page_size : int = 10
