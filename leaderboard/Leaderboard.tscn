@@ -24,7 +24,6 @@ script/source = "extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	add_child(easy_leaderboard_api)
 	_refresh_results()
 	$LeadboardPanel/HeaderGridContainer/LeaderboardTitle.text = leaderboard_title
 	
@@ -157,6 +156,10 @@ offset_bottom = 601.0
 [node name="LeaderboardScoreSubmitPanel" parent="." instance=ExtResource("2_3bnnd")]
 visible = false
 layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 358.0
+offset_bottom = 309.0
 
 [connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]
 [connection signal="leaderboard_score_submitted" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_score_submitted"]
