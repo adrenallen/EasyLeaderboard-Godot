@@ -15,9 +15,16 @@ const DEFAULT_SORT_RESULTS_ASCENDING = false
 @export var page_size : int = 10
 @export var current_page : int = 1
 
-# TODO - implement this
-#@export var page_size : int = 10
+@onready var get_leaderboard_request : HTTPRequest = HTTPRequest.new()
+@onready var submit_score_request : HTTPRequest = HTTPRequest.new()
 
+
+func _ready():
+	get_leaderboard_request.request_completed.connect(_on_get_leaderboard_request_request_completed)
+	submit_score_request.request_completed.connect(_on_submit_score_request_request_completed)
+	add_child(get_leaderboard_request)
+	add_child(submit_score_request)
+	
 # Initiates request to get leaderboard results
 # retrieve the results by connecting to the `leaderboard_results_changed` signal
 func get_leaderboard_results():
@@ -37,7 +44,7 @@ func _refresh_leaderboard():
 	params += "&page=" + str(current_page)
 	
 	# TODO - Build the URL more nicely
-	$GetLeaderboardRequest.request(
+	get_leaderboard_request.request(
 		easy_leaderboard_url + "/games/" + game_name + params,
 		[],
 		false,
@@ -77,7 +84,7 @@ func _submit_leaderboard_score(score_name, score_value, score_metadata = {}, sco
 	else:
 		request["validation"] = json.stringify(request).sha256_text()
 
-	$SubmitScoreRequest.request(easy_leaderboard_url + "/games/submit", ['Content-Type: application/json'], false, HTTPClient.METHOD_POST, json.stringify(request))
+	submit_score_request.request(easy_leaderboard_url + "/games/submit", ['Content-Type: application/json'], false, HTTPClient.METHOD_POST, json.stringify(request))
 
 
 func _on_submit_score_request_request_completed(_result, response_code, _headers, body):

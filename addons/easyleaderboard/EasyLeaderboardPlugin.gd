@@ -2,7 +2,7 @@
 extends EditorPlugin
 
 func _enter_tree():
-	pass
+	add_custom_type("EasyLeaderboardAPI", "Node", preload("res://addons/easyleaderboard/api/EasyLeaderboard.gd"), preload("icon.png"))
 
 func _exit_tree():
-	pass
+	remove_custom_type("EasyLeaderboardAPI")
