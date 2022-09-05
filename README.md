@@ -1,4 +1,5 @@
 # EasyLeaderboard + Godot
+![EasyLeaderboard + Godot](/icon.png)
 
 ## Features
 
