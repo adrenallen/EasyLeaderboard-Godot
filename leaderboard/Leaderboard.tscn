@@ -113,6 +113,14 @@ func _calculate_page_for_result(result):
 	else:
 		number_to_skip = result.scoresGreater
 		
+	# skip pages until we are on the page with the result we just submitted
+	current_page = 1
+	while number_to_skip > results_per_page:
+		number_to_skip -= results_per_page
+		current_page += 1
+		
+	
+		
 "
 
 [node name="Leaderboard" type="Control"]
