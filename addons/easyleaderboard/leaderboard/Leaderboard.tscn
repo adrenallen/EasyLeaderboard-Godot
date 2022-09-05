@@ -10,6 +10,8 @@ script/source = "extends Control
 @export var results_per_page = 10
 @export var current_page = 1
 @export var leaderboard_title = \"Leaderboard\"
+@export var show_new_game_button : bool = true
+@export var show_menu_button : bool = true
 
 # Using same defaults as the API
 @export_group(\"EasyLeaderboard API settings\")
@@ -222,17 +224,45 @@ text = "Next"
 
 [node name="ResultsGridContainer" type="GridContainer" parent="LeadboardPanel"]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 48.0
-offset_right = 644.0
-offset_bottom = 538.0
+offset_left = 30.0
+offset_top = 62.0
+offset_right = 615.0
+offset_bottom = 551.0
 
 [node name="FooterGridContainer" type="GridContainer" parent="LeadboardPanel"]
 layout_mode = 0
-offset_left = 6.0
+offset_left = 46.0
 offset_top = 561.0
-offset_right = 636.0
+offset_right = 598.0
 offset_bottom = 601.0
+columns = 2
+
+[node name="NewGameButtonContainer" type="CenterContainer" parent="LeadboardPanel/FooterGridContainer"]
+layout_mode = 2
+offset_right = 274.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+
+[node name="NewGameButton" type="Button" parent="LeadboardPanel/FooterGridContainer/NewGameButtonContainer"]
+layout_mode = 2
+offset_left = 90.0
+offset_right = 183.0
+offset_bottom = 31.0
+text = "New Game"
+
+[node name="MenuButtonContainer" type="CenterContainer" parent="LeadboardPanel/FooterGridContainer"]
+layout_mode = 2
+offset_left = 278.0
+offset_right = 552.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+
+[node name="MenuButton" type="Button" parent="LeadboardPanel/FooterGridContainer/MenuButtonContainer"]
+layout_mode = 2
+offset_left = 89.0
+offset_right = 185.0
+offset_bottom = 31.0
+text = "Main Menu"
 
 [node name="LeaderboardScoreSubmitPanel" parent="." instance=ExtResource("2_3bnnd")]
 layout_mode = 0
