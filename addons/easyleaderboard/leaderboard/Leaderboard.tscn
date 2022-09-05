@@ -52,17 +52,17 @@ script/source = "extends Control
 		if is_visible_in_tree():
 			_update_submit_score_panel_options()
 
-@onready var results_container : GridContainer = $LeadboardPanel/ResultsGridContainer
+@onready var results_container : GridContainer = $LeaderboardPanel/ResultsGridContainer
 @onready var easy_leaderboard_api : EasyLeaderboard = $EasyLeaderboard
-@onready var prev_button : Button = $LeadboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton
-@onready var next_button : Button = $LeadboardPanel/HeaderGridContainer/NextButtonContainer/NextButton
+@onready var prev_button : Button = $LeaderboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton
+@onready var next_button : Button = $LeaderboardPanel/HeaderGridContainer/NextButtonContainer/NextButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_handle_visible_panes()
 	if !show_submit_modal:
 		_refresh_results()
-	$LeadboardPanel/HeaderGridContainer/LeaderboardTitle.text = leaderboard_title
+	$LeaderboardPanel/HeaderGridContainer/LeaderboardTitle.text = leaderboard_title
 	
 	_update_submit_score_panel_options()
 	
@@ -129,7 +129,7 @@ func _refresh_results():
 
 # Handles showing the right pane (leaderboard or score submit)
 func _handle_visible_panes():
-	$LeadboardPanel.visible = !show_submit_modal
+	$LeaderboardPanel.visible = !show_submit_modal
 	$LeaderboardScoreSubmitPanel.visible = show_submit_modal
 
 func _on_leaderboard_score_submit_panel_leaderboard_score_canceled():
@@ -170,25 +170,25 @@ script = SubResource("GDScript_7ko77")
 
 [node name="EasyLeaderboard" parent="." instance=ExtResource("1_f4dny")]
 
-[node name="LeadboardPanel" type="Panel" parent="."]
+[node name="LeaderboardPanel" type="Panel" parent="."]
 layout_mode = 0
 offset_right = 643.0
 offset_bottom = 607.0
 
-[node name="HeaderGridContainer" type="GridContainer" parent="LeadboardPanel"]
+[node name="HeaderGridContainer" type="GridContainer" parent="LeaderboardPanel"]
 layout_mode = 0
 offset_top = 10.0
 offset_right = 643.0
 offset_bottom = 43.0
 columns = 3
 
-[node name="PrevButtonContainer" type="CenterContainer" parent="LeadboardPanel/HeaderGridContainer"]
+[node name="PrevButtonContainer" type="CenterContainer" parent="LeaderboardPanel/HeaderGridContainer"]
 layout_mode = 2
 offset_right = 268.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 
-[node name="PrevButton" type="Button" parent="LeadboardPanel/HeaderGridContainer/PrevButtonContainer"]
+[node name="PrevButton" type="Button" parent="LeaderboardPanel/HeaderGridContainer/PrevButtonContainer"]
 layout_mode = 2
 offset_left = 112.0
 offset_right = 155.0
@@ -197,7 +197,7 @@ size_flags_horizontal = 3
 disabled = true
 text = "Prev"
 
-[node name="LeaderboardTitle" type="Label" parent="LeadboardPanel/HeaderGridContainer"]
+[node name="LeaderboardTitle" type="Label" parent="LeaderboardPanel/HeaderGridContainer"]
 layout_mode = 2
 offset_left = 272.0
 offset_top = 2.0
@@ -206,14 +206,14 @@ offset_bottom = 28.0
 text = "Leaderboard"
 horizontal_alignment = 1
 
-[node name="NextButtonContainer" type="CenterContainer" parent="LeadboardPanel/HeaderGridContainer"]
+[node name="NextButtonContainer" type="CenterContainer" parent="LeaderboardPanel/HeaderGridContainer"]
 layout_mode = 2
 offset_left = 376.0
 offset_right = 643.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 
-[node name="NextButton" type="Button" parent="LeadboardPanel/HeaderGridContainer/NextButtonContainer"]
+[node name="NextButton" type="Button" parent="LeaderboardPanel/HeaderGridContainer/NextButtonContainer"]
 layout_mode = 2
 offset_left = 111.0
 offset_right = 156.0
@@ -222,14 +222,29 @@ size_flags_horizontal = 3
 disabled = true
 text = "Next"
 
-[node name="ResultsGridContainer" type="GridContainer" parent="LeadboardPanel"]
+[node name="ResultsGridContainer" type="GridContainer" parent="LeaderboardPanel"]
 layout_mode = 0
 offset_left = 30.0
 offset_top = 62.0
 offset_right = 615.0
 offset_bottom = 551.0
 
-[node name="FooterGridContainer" type="GridContainer" parent="LeadboardPanel"]
+[node name="CenterContainer" type="CenterContainer" parent="LeaderboardPanel/ResultsGridContainer"]
+layout_mode = 2
+offset_right = 585.0
+offset_bottom = 489.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="LeaderboardPanel/ResultsGridContainer/CenterContainer"]
+layout_mode = 2
+offset_left = 255.0
+offset_top = 231.0
+offset_right = 330.0
+offset_bottom = 257.0
+text = "Loading..."
+
+[node name="FooterGridContainer" type="GridContainer" parent="LeaderboardPanel"]
 layout_mode = 0
 offset_left = 46.0
 offset_top = 561.0
@@ -237,27 +252,27 @@ offset_right = 598.0
 offset_bottom = 601.0
 columns = 2
 
-[node name="NewGameButtonContainer" type="CenterContainer" parent="LeadboardPanel/FooterGridContainer"]
+[node name="NewGameButtonContainer" type="CenterContainer" parent="LeaderboardPanel/FooterGridContainer"]
 layout_mode = 2
 offset_right = 274.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 
-[node name="NewGameButton" type="Button" parent="LeadboardPanel/FooterGridContainer/NewGameButtonContainer"]
+[node name="NewGameButton" type="Button" parent="LeaderboardPanel/FooterGridContainer/NewGameButtonContainer"]
 layout_mode = 2
 offset_left = 90.0
 offset_right = 183.0
 offset_bottom = 31.0
 text = "New Game"
 
-[node name="MenuButtonContainer" type="CenterContainer" parent="LeadboardPanel/FooterGridContainer"]
+[node name="MenuButtonContainer" type="CenterContainer" parent="LeaderboardPanel/FooterGridContainer"]
 layout_mode = 2
 offset_left = 278.0
 offset_right = 552.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 
-[node name="MenuButton" type="Button" parent="LeadboardPanel/FooterGridContainer/MenuButtonContainer"]
+[node name="MenuButton" type="Button" parent="LeaderboardPanel/FooterGridContainer/MenuButtonContainer"]
 layout_mode = 2
 offset_left = 89.0
 offset_right = 185.0
@@ -274,7 +289,7 @@ easy_leaderboard_api_path = NodePath("../EasyLeaderboard")
 
 [connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]
 [connection signal="leaderboard_score_submitted" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_score_submitted"]
-[connection signal="pressed" from="LeadboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton" to="." method="_on_prev_button_pressed"]
-[connection signal="pressed" from="LeadboardPanel/HeaderGridContainer/NextButtonContainer/NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="LeaderboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton" to="." method="_on_prev_button_pressed"]
+[connection signal="pressed" from="LeaderboardPanel/HeaderGridContainer/NextButtonContainer/NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="leaderboard_score_canceled" from="LeaderboardScoreSubmitPanel" to="." method="_on_leaderboard_score_submit_panel_leaderboard_score_canceled"]
 [connection signal="leaderboard_score_submitted" from="LeaderboardScoreSubmitPanel" to="." method="_on_leaderboard_score_submit_panel_leaderboard_score_submitted"]
