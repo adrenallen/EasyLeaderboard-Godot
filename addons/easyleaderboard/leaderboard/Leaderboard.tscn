@@ -92,10 +92,10 @@ func _on_easy_leaderboard_leaderboard_results_changed(results):
 		
 		results_container.add_child(row)
 		
+	# Add fake rows for spacing consistency
 	while results_container.get_child_count() < results_per_page:
-		row_number = row_number + 1
-		var fake_row = row_scene.instantiate()
-		fake_row.result_number = row_number
+		var fake_row := row_scene.instantiate() as GridContainer
+		fake_row.modulate.a = 0 # make it invisible!
 		results_container.add_child(fake_row)
 		
 	next_button.disabled = len(results) < results_per_page
