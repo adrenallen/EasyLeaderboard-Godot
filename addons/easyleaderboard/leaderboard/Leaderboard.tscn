@@ -159,7 +159,6 @@ func _calculate_page_for_result(result):
 layout_mode = 3
 anchors_preset = 0
 script = SubResource("GDScript_7ko77")
-show_submit_modal = true
 
 [node name="EasyLeaderboard" parent="." instance=ExtResource("1_f4dny")]
 
@@ -237,6 +236,8 @@ offset_right = 506.0
 offset_bottom = 459.0
 easy_leaderboard_api_path = NodePath("../EasyLeaderboard")
 
+[connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]
+[connection signal="leaderboard_score_submitted" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_score_submitted"]
 [connection signal="pressed" from="LeadboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton" to="." method="_on_prev_button_pressed"]
 [connection signal="pressed" from="LeadboardPanel/HeaderGridContainer/NextButtonContainer/NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="leaderboard_score_canceled" from="LeaderboardScoreSubmitPanel" to="." method="_on_leaderboard_score_submit_panel_leaderboard_score_canceled"]
