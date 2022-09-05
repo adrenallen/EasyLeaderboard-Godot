@@ -92,6 +92,12 @@ func _on_easy_leaderboard_leaderboard_results_changed(results):
 		
 		results_container.add_child(row)
 		
+	while results_container.get_child_count() < results_per_page:
+		row_number = row_number + 1
+		var fake_row = row_scene.instantiate()
+		fake_row.result_number = row_number
+		results_container.add_child(fake_row)
+		
 	next_button.disabled = len(results) < results_per_page
 	prev_button.disabled = current_page <= 1
 
