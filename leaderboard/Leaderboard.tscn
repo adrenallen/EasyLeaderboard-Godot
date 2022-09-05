@@ -23,6 +23,7 @@ script/source = "extends Control
 @export var show_submit_modal : bool = false
 @export var submit_score : float = 0
 @export var submit_name : String
+@export var submit_score_metadata = {}
 @export var allow_cancel : bool = true
 
 @onready var results_container : GridContainer = $LeadboardPanel/ResultsGridContainer
@@ -30,13 +31,19 @@ script/source = "extends Control
 @onready var prev_button : Button = $LeadboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton
 @onready var next_button : Button = $LeadboardPanel/HeaderGridContainer/NextButtonContainer/NextButton
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_handle_visible_panes()
 	if !show_submit_modal:
 		_refresh_results()
 	$LeadboardPanel/HeaderGridContainer/LeaderboardTitle.text = leaderboard_title
+	
+	$LeaderboardScoreSubmitPanel.score_name = submit_name
+	$LeaderboardScoreSubmitPanel.score = submit_score
+	$LeaderboardScoreSubmitPanel.score_metadata = submit_score_metadata
+	$LeaderboardScoreSubmitPanel.allow_cancel = allow_cancel
+	$LeaderboardScoreSubmitPanel.update_panel_settings()
+	
 	
 
 func _check_prev_button_valid():
@@ -64,7 +71,7 @@ func _on_easy_leaderboard_leaderboard_results_changed(results):
 	prev_button.disabled = current_page <= 1
 
 
-func _on_easy_leaderboard_leaderboard_score_submitted():
+func _on_easy_leaderboard_leaderboard_score_submitted(result):
 	pass # Replace with function body.
 
 

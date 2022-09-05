@@ -18,11 +18,15 @@ signal leaderboard_score_canceled
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	update_panel_settings()
+
+func update_panel_settings():
 	if not (easy_leaderboard_api is EasyLeaderboard):
 		push_error(\"easy_leaderboard_api_path must point to a valid EasyLeaderboard node\")
 		
-	# Add connection for score submit complete!
-	easy_leaderboard_api.leaderboard_score_submitted.connect(_on_easy_leaderboard_api_score_submitted)
+	if !easy_leaderboard_api.leaderboard_score_submitted.is_connected(_on_easy_leaderboard_api_score_submitted):
+		# Add connection for score submit complete!
+		easy_leaderboard_api.leaderboard_score_submitted.connect(_on_easy_leaderboard_api_score_submitted)
 		
 	$ScoreLabel/Value.text = str(score)
 	
