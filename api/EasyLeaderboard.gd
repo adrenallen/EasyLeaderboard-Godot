@@ -2,7 +2,7 @@ class_name EasyLeaderboard
 extends Node
 
 signal leaderboard_results_changed(results)
-signal leaderboard_score_submitted
+signal leaderboard_score_submitted(result)
 
 const DEFAULT_EASY_LEADERBOARD_URL = "https://lb.userdefined.io"
 const DEFAULT_GAME_NAME = "easy-leaderboard-example"

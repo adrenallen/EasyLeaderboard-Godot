@@ -6,25 +6,36 @@
 [sub_resource type="GDScript" id="GDScript_7ko77"]
 script/source = "extends Control
 
-@export var row_scene : PackedScene = preload(\"res://leaderboard/LeaderboardRow.tscn\")
 
-@export var page_size = 10
+@export var row_scene : PackedScene = preload(\"res://leaderboard/LeaderboardRow.tscn\")
+@export var results_per_page = 10
 @export var current_page = 1
 @export var leaderboard_title = \"Leaderboard\"
 
 # Using same defaults as the API
-@export var easy_leaderboard_url = EasyLeaderboard.DEFAULT_EASY_LEADERBOARD_URL
+@export_group(\"EasyLeaderboard API settings\")
+
+@export var easy_leaderboard_url = EasyLeaderboard.DEFAULT_EASY_LEADERBOARD_URL 
 @export var game_name = EasyLeaderboard.DEFAULT_GAME_NAME
 @export var sort_results_asc = EasyLeaderboard.DEFAULT_SORT_RESULTS_ASCENDING
+
+@export_group(\"Submit Score Modal\")
+@export var show_submit_modal : bool = false
+@export var submit_score : float = 0
+@export var submit_name : String
+@export var allow_cancel : bool = true
 
 @onready var results_container : GridContainer = $LeadboardPanel/ResultsGridContainer
 @onready var easy_leaderboard_api : EasyLeaderboard = $EasyLeaderboard
 @onready var prev_button : Button = $LeadboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton
 @onready var next_button : Button = $LeadboardPanel/HeaderGridContainer/NextButtonContainer/NextButton
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	_refresh_results()
+	_handle_visible_panes()
+	if !show_submit_modal:
+		_refresh_results()
 	$LeadboardPanel/HeaderGridContainer/LeaderboardTitle.text = leaderboard_title
 	
 
@@ -37,7 +48,7 @@ func _on_easy_leaderboard_leaderboard_results_changed(results):
 	for child in results_container.get_children():
 		results_container.remove_child(child)
 	
-	var row_number = page_size * (current_page - 1)
+	var row_number = results_per_page * (current_page - 1)
 	for result in results:
 		row_number = row_number + 1
 		
@@ -49,7 +60,7 @@ func _on_easy_leaderboard_leaderboard_results_changed(results):
 		
 		results_container.add_child(row)
 		
-	next_button.disabled = len(results) < page_size
+	next_button.disabled = len(results) < results_per_page
 	prev_button.disabled = current_page <= 1
 
 
@@ -70,27 +81,52 @@ func _refresh_results():
 	prev_button.disabled = true
 	
 	easy_leaderboard_api.current_page = current_page
-	easy_leaderboard_api.page_size = page_size
+	easy_leaderboard_api.page_size = results_per_page
 	easy_leaderboard_api.game_name = game_name
 	easy_leaderboard_api.sort_results_ascending = sort_results_asc
 	
 	easy_leaderboard_api.get_leaderboard_results()
 
+# Handles showing the right pane (leaderboard or score submit)
+func _handle_visible_panes():
+	$LeadboardPanel.visible = !show_submit_modal
+	$LeaderboardScoreSubmitPanel.visible = show_submit_modal
+
+func _on_leaderboard_score_submit_panel_leaderboard_score_canceled():
+	show_submit_modal = false
+	_handle_visible_panes()
+	_refresh_results()
+
+
+func _on_leaderboard_score_submit_panel_leaderboard_score_submitted(result):
+	show_submit_modal = false
+	_handle_visible_panes()
+	# TODO - set the page to the right number based on result
+	_calculate_page_for_result(result)
+		
+	_refresh_results()
+
+func _calculate_page_for_result(result):
+	var number_to_skip : int
+	if sort_results_asc:
+		number_to_skip = result.scoresLesser
+	else:
+		number_to_skip = result.scoresGreater
+		
 "
 
 [node name="Leaderboard" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = SubResource("GDScript_7ko77")
+show_submit_modal = true
 
 [node name="EasyLeaderboard" parent="." instance=ExtResource("1_f4dny")]
 
 [node name="LeadboardPanel" type="Panel" parent="."]
 layout_mode = 0
-offset_left = 253.0
-offset_top = 14.0
-offset_right = 896.0
-offset_bottom = 621.0
+offset_right = 643.0
+offset_bottom = 607.0
 
 [node name="HeaderGridContainer" type="GridContainer" parent="LeadboardPanel"]
 layout_mode = 0
@@ -154,14 +190,16 @@ offset_right = 636.0
 offset_bottom = 601.0
 
 [node name="LeaderboardScoreSubmitPanel" parent="." instance=ExtResource("2_3bnnd")]
-visible = false
 layout_mode = 0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 358.0
-offset_bottom = 309.0
+offset_left = 148.0
+offset_top = 150.0
+offset_right = 506.0
+offset_bottom = 459.0
+easy_leaderboard_api_path = NodePath("../EasyLeaderboard")
 
 [connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]
 [connection signal="leaderboard_score_submitted" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_score_submitted"]
 [connection signal="pressed" from="LeadboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton" to="." method="_on_prev_button_pressed"]
 [connection signal="pressed" from="LeadboardPanel/HeaderGridContainer/NextButtonContainer/NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="leaderboard_score_canceled" from="LeaderboardScoreSubmitPanel" to="." method="_on_leaderboard_score_submit_panel_leaderboard_score_canceled"]
+[connection signal="leaderboard_score_submitted" from="LeaderboardScoreSubmitPanel" to="." method="_on_leaderboard_score_submit_panel_leaderboard_score_submitted"]

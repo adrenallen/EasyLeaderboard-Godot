@@ -51,7 +51,5 @@ offset_right = 638.0
 offset_bottom = 336.0
 text = "RETRIEVE"
 
-[connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]
-[connection signal="leaderboard_score_submitted" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_score_submitted"]
 [connection signal="pressed" from="TestSubmitButton" to="." method="_on_test_submit_button_pressed"]
 [connection signal="pressed" from="TestRetrieveButton" to="." method="_on_test_retrieve_button_pressed"]
