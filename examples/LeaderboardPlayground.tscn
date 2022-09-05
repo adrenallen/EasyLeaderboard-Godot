@@ -1,0 +1,76 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3tiv4kfcxmsr"]
+
+[ext_resource type="PackedScene" uid="uid://qtd4jtukqvh3" path="res://leaderboard/Leaderboard.tscn" id="1_0c5m7"]
+
+[sub_resource type="GDScript" id="GDScript_vwbai"]
+script/source = "extends Node2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	$Node2d/ShowSubmitModalCheckbox.button_pressed = true
+	$Node2d/Score/LineEdit.text = \"1234\"
+	
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+
+func _on_show_submit_modal_checkbox_toggled(button_pressed):
+	$Leaderboard.show_submit_modal = button_pressed
+
+
+func _on_line_edit_text_changed(new_text : String):
+	$Leaderboard.submit_score = new_text.to_float()
+"
+
+[node name="LeaderboardPlayground" type="Node2D"]
+script = SubResource("GDScript_vwbai")
+
+[node name="Leaderboard" parent="." instance=ExtResource("1_0c5m7")]
+offset_left = 488.0
+offset_top = 19.0
+offset_right = 488.0
+offset_bottom = 19.0
+
+[node name="Node2d" type="Node2D" parent="."]
+
+[node name="Label" type="Label" parent="Node2d"]
+offset_left = 58.0
+offset_top = 43.0
+offset_right = 411.0
+offset_bottom = 122.0
+text = "Play with the settings below to see how they change functionality!"
+autowrap_mode = 2
+
+[node name="ShowSubmitModalCheckbox" type="CheckBox" parent="Node2d"]
+offset_left = 222.0
+offset_top = 412.0
+offset_right = 246.0
+offset_bottom = 436.0
+
+[node name="Label" type="Label" parent="Node2d/ShowSubmitModalCheckbox"]
+layout_mode = 0
+offset_left = 31.0
+offset_right = 185.0
+offset_bottom = 26.0
+text = "Show Submit Modal"
+
+[node name="Score" type="Label" parent="Node2d"]
+offset_left = 221.0
+offset_top = 458.0
+offset_right = 264.0
+offset_bottom = 484.0
+text = "Score"
+
+[node name="LineEdit" type="LineEdit" parent="Node2d/Score"]
+layout_mode = 0
+offset_left = 46.0
+offset_right = 113.063
+offset_bottom = 31.0
+text = "12.37"
+
+[connection signal="toggled" from="Node2d/ShowSubmitModalCheckbox" to="." method="_on_show_submit_modal_checkbox_toggled"]
+[connection signal="text_changed" from="Node2d/Score/LineEdit" to="." method="_on_line_edit_text_changed"]

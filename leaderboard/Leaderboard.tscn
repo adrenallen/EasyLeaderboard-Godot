@@ -20,11 +20,36 @@ script/source = "extends Control
 @export var sort_results_asc = EasyLeaderboard.DEFAULT_SORT_RESULTS_ASCENDING
 
 @export_group(\"Submit Score Modal\")
-@export var show_submit_modal : bool = false
-@export var submit_score : float = 0
-@export var submit_name : String
-@export var submit_score_metadata = {}
-@export var allow_cancel : bool = true
+
+@export var show_submit_modal : bool = false :
+	set(value):
+		show_submit_modal = value
+		if is_visible_in_tree():
+			_handle_visible_panes()
+			
+@export var submit_score : float = 0 :
+	set(value):
+		submit_score = value
+		if is_visible_in_tree():
+			_update_submit_score_panel_options()
+			
+@export var submit_name : String :
+	set(value):
+		submit_name = value
+		if is_visible_in_tree():
+			_update_submit_score_panel_options()
+
+@export var submit_score_metadata = {} :
+	set(value):
+		submit_score_metadata = value
+		if is_visible_in_tree():
+			_update_submit_score_panel_options()
+
+@export var allow_cancel : bool = true :
+	set(value):
+		allow_cancel = value
+		if is_visible_in_tree():
+			_update_submit_score_panel_options()
 
 @onready var results_container : GridContainer = $LeadboardPanel/ResultsGridContainer
 @onready var easy_leaderboard_api : EasyLeaderboard = $EasyLeaderboard
@@ -38,14 +63,15 @@ func _ready():
 		_refresh_results()
 	$LeadboardPanel/HeaderGridContainer/LeaderboardTitle.text = leaderboard_title
 	
+	_update_submit_score_panel_options()
+	
+func _update_submit_score_panel_options():
 	$LeaderboardScoreSubmitPanel.score_name = submit_name
 	$LeaderboardScoreSubmitPanel.score = submit_score
 	$LeaderboardScoreSubmitPanel.score_metadata = submit_score_metadata
 	$LeaderboardScoreSubmitPanel.allow_cancel = allow_cancel
 	$LeaderboardScoreSubmitPanel.update_panel_settings()
 	
-	
-
 func _check_prev_button_valid():
 	prev_button.disabled = current_page == 1
 
