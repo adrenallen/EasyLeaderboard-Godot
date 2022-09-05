@@ -24,6 +24,10 @@ config/name="Leaderboard-template"
 config/features=PackedStringArray("4.0", "Vulkan Mobile")
 config/icon="res://icon.png"
 
+[editor_plugins]
+
+enabled=PackedStringArray()
+
 [rendering]
 
 vulkan/rendering/back_end=1
