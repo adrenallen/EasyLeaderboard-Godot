@@ -1,13 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://qtd4jtukqvh3"]
 
-[ext_resource type="PackedScene" uid="uid://dyc75iewallhd" path="res://api/EasyLeaderboard.tscn" id="1_f4dny"]
-[ext_resource type="PackedScene" uid="uid://c0t0hiwfc7xfe" path="res://leaderboard/LeaderboardScoreSubmitPanel.tscn" id="2_3bnnd"]
+[ext_resource type="PackedScene" uid="uid://dyc75iewallhd" path="res://addons/easyleaderboard/api/EasyLeaderboard.tscn" id="1_f4dny"]
+[ext_resource type="PackedScene" uid="uid://c0t0hiwfc7xfe" path="res://addons/easyleaderboard/leaderboard/LeaderboardScoreSubmitPanel.tscn" id="2_3bnnd"]
 
 [sub_resource type="GDScript" id="GDScript_7ko77"]
 script/source = "extends Control
 
-
-@export var row_scene : PackedScene = preload(\"res://leaderboard/LeaderboardRow.tscn\")
+@export var row_scene : PackedScene = preload(\"res://addons/easyleaderboard/leaderboard/LeaderboardRow.tscn\")
 @export var results_per_page = 10
 @export var current_page = 1
 @export var leaderboard_title = \"Leaderboard\"
@@ -238,8 +237,6 @@ offset_right = 506.0
 offset_bottom = 459.0
 easy_leaderboard_api_path = NodePath("../EasyLeaderboard")
 
-[connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]
-[connection signal="leaderboard_score_submitted" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_score_submitted"]
 [connection signal="pressed" from="LeadboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton" to="." method="_on_prev_button_pressed"]
 [connection signal="pressed" from="LeadboardPanel/HeaderGridContainer/NextButtonContainer/NextButton" to="." method="_on_next_button_pressed"]
 [connection signal="leaderboard_score_canceled" from="LeaderboardScoreSubmitPanel" to="." method="_on_leaderboard_score_submit_panel_leaderboard_score_canceled"]

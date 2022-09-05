@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cbidvjbt20eoj"]
 
-[ext_resource type="PackedScene" uid="uid://dyc75iewallhd" path="res://api/EasyLeaderboard.tscn" id="1_lwcop"]
+[ext_resource type="PackedScene" uid="uid://dyc75iewallhd" path="res://addons/easyleaderboard/api/EasyLeaderboard.tscn" id="1_lwcop"]
 
 [sub_resource type="GDScript" id="GDScript_8y05b"]
 script/source = "extends Node2D

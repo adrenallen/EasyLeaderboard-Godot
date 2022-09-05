@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://dyc75iewallhd"]
 
-[ext_resource type="Script" path="res://api/EasyLeaderboard.gd" id="1_x6b5n"]
+[ext_resource type="Script" path="res://addons/easyleaderboard/api/EasyLeaderboard.gd" id="1_vlvap"]
 
 [node name="EasyLeaderboard" type="Node"]
-script = ExtResource("1_x6b5n")
+script = ExtResource("1_vlvap")
 
 [node name="GetLeaderboardRequest" type="HTTPRequest" parent="."]
 

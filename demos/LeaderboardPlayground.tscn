@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://d3tiv4kfcxmsr"]
 
-[ext_resource type="PackedScene" uid="uid://qtd4jtukqvh3" path="res://leaderboard/Leaderboard.tscn" id="1_0c5m7"]
+[ext_resource type="PackedScene" uid="uid://qtd4jtukqvh3" path="res://addons/easyleaderboard/leaderboard/Leaderboard.tscn" id="1_0c5m7"]
 
 [sub_resource type="GDScript" id="GDScript_vwbai"]
 script/source = "extends Node2D
@@ -52,7 +52,6 @@ offset_right = 246.0
 offset_bottom = 436.0
 
 [node name="Label" type="Label" parent="Node2d/ShowSubmitModalCheckbox"]
-layout_mode = 0
 offset_left = 31.0
 offset_right = 185.0
 offset_bottom = 26.0
@@ -66,7 +65,6 @@ offset_bottom = 484.0
 text = "Score"
 
 [node name="LineEdit" type="LineEdit" parent="Node2d/Score"]
-layout_mode = 0
 offset_left = 46.0
 offset_right = 113.063
 offset_bottom = 31.0
