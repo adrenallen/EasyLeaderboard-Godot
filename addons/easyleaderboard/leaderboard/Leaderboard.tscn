@@ -6,12 +6,18 @@
 [sub_resource type="GDScript" id="GDScript_7ko77"]
 script/source = "extends Control
 
+signal new_game_button_pressed
+signal main_menu_button_pressed
+
 @export var row_scene : PackedScene = preload(\"res://addons/easyleaderboard/leaderboard/LeaderboardRow.tscn\")
 @export var results_per_page = 10
 @export var current_page = 1
 @export var leaderboard_title = \"Leaderboard\"
 @export var show_new_game_button : bool = true
 @export var show_menu_button : bool = true
+
+@export var new_game_button_text : String = \"New Game\"
+@export var menu_button_text : String = \"Main Menu\"
 
 # Using same defaults as the API
 @export_group(\"EasyLeaderboard API settings\")
@@ -64,7 +70,25 @@ func _ready():
 		_refresh_results()
 	$LeaderboardPanel/HeaderGridContainer/LeaderboardTitle.text = leaderboard_title
 	
+	_handle_footer_section()
+	
 	_update_submit_score_panel_options()
+	
+func _handle_footer_section():
+	$LeaderboardPanel/FooterGridContainer/MenuButtonContainer.visible = show_menu_button
+	$LeaderboardPanel/FooterGridContainer/MenuButtonContainer/MenuButton.text = menu_button_text
+	
+	$LeaderboardPanel/FooterGridContainer/NewGameButtonContainer.visible = show_new_game_button
+	$LeaderboardPanel/FooterGridContainer/NewGameButtonContainer/NewGameButton.text = new_game_button_text
+	
+	var footer_cols := 0
+	if show_new_game_button:
+		footer_cols += 1
+	if show_menu_button:
+		footer_cols += 1
+	$LeaderboardPanel/FooterGridContainer.columns = footer_cols
+	
+	
 	
 func _update_submit_score_panel_options():
 	$LeaderboardScoreSubmitPanel.score_name = submit_name
@@ -158,9 +182,18 @@ func _calculate_page_for_result(result):
 	while number_to_skip > results_per_page:
 		number_to_skip -= results_per_page
 		current_page += 1
-		
 	
-		
+
+func _on_new_game_button_pressed():
+	$LeaderboardPanel/FooterGridContainer/MenuButtonContainer/MenuButton.disabled = true
+	$LeaderboardPanel/FooterGridContainer/NewGameButtonContainer/NewGameButton.disabled = true
+	new_game_button_pressed.emit()
+
+func _on_menu_button_pressed():
+	$LeaderboardPanel/FooterGridContainer/MenuButtonContainer/MenuButton.disabled = true
+	$LeaderboardPanel/FooterGridContainer/NewGameButtonContainer/NewGameButton.disabled = true
+	main_menu_button_pressed.emit()
+	
 "
 
 [node name="Leaderboard" type="Control"]
@@ -291,5 +324,7 @@ easy_leaderboard_api_path = NodePath("../EasyLeaderboard")
 [connection signal="leaderboard_score_submitted" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_score_submitted"]
 [connection signal="pressed" from="LeaderboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton" to="." method="_on_prev_button_pressed"]
 [connection signal="pressed" from="LeaderboardPanel/HeaderGridContainer/NextButtonContainer/NextButton" to="." method="_on_next_button_pressed"]
+[connection signal="pressed" from="LeaderboardPanel/FooterGridContainer/NewGameButtonContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="LeaderboardPanel/FooterGridContainer/MenuButtonContainer/MenuButton" to="." method="_on_menu_button_pressed"]
 [connection signal="leaderboard_score_canceled" from="LeaderboardScoreSubmitPanel" to="." method="_on_leaderboard_score_submit_panel_leaderboard_score_canceled"]
 [connection signal="leaderboard_score_submitted" from="LeaderboardScoreSubmitPanel" to="." method="_on_leaderboard_score_submit_panel_leaderboard_score_submitted"]
