@@ -120,7 +120,7 @@ func _on_easy_leaderboard_leaderboard_results_changed(results):
 		
 	# Add fake rows for spacing consistency
 	while results_container.get_child_count() < results_per_page:
-		var fake_row := row_scene.instantiate() as GridContainer
+		var fake_row := row_scene.instantiate() as Node
 		fake_row.modulate.a = 0 # make it invisible!
 		results_container.add_child(fake_row)
 		

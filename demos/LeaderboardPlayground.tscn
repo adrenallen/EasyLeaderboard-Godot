@@ -8,8 +8,8 @@ script/source = "extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$Node2d/ShowSubmitModalCheckbox.button_pressed = true
-	$Node2d/Score/LineEdit.text = \"1234\"
+	$PlaygroundControls/ShowSubmitModalCheckbox.button_pressed = false
+	$PlaygroundControls/Score/LineEdit.text = \"1234\"
 	
 
 
@@ -35,9 +35,9 @@ offset_top = 19.0
 offset_right = 488.0
 offset_bottom = 19.0
 
-[node name="Node2d" type="Node2D" parent="."]
+[node name="PlaygroundControls" type="Node2D" parent="."]
 
-[node name="Label" type="Label" parent="Node2d"]
+[node name="Label" type="Label" parent="PlaygroundControls"]
 offset_left = 58.0
 offset_top = 43.0
 offset_right = 411.0
@@ -45,30 +45,30 @@ offset_bottom = 122.0
 text = "Play with the settings below to see how they change functionality!"
 autowrap_mode = 2
 
-[node name="ShowSubmitModalCheckbox" type="CheckBox" parent="Node2d"]
+[node name="ShowSubmitModalCheckbox" type="CheckBox" parent="PlaygroundControls"]
 offset_left = 222.0
 offset_top = 412.0
 offset_right = 246.0
 offset_bottom = 436.0
 
-[node name="Label" type="Label" parent="Node2d/ShowSubmitModalCheckbox"]
+[node name="Label" type="Label" parent="PlaygroundControls/ShowSubmitModalCheckbox"]
 offset_left = 31.0
 offset_right = 185.0
 offset_bottom = 26.0
 text = "Show Submit Modal"
 
-[node name="Score" type="Label" parent="Node2d"]
+[node name="Score" type="Label" parent="PlaygroundControls"]
 offset_left = 221.0
 offset_top = 458.0
 offset_right = 264.0
 offset_bottom = 484.0
 text = "Score"
 
-[node name="LineEdit" type="LineEdit" parent="Node2d/Score"]
+[node name="LineEdit" type="LineEdit" parent="PlaygroundControls/Score"]
 offset_left = 46.0
 offset_right = 113.063
 offset_bottom = 31.0
 text = "12.37"
 
-[connection signal="toggled" from="Node2d/ShowSubmitModalCheckbox" to="." method="_on_show_submit_modal_checkbox_toggled"]
-[connection signal="text_changed" from="Node2d/Score/LineEdit" to="." method="_on_line_edit_text_changed"]
+[connection signal="toggled" from="PlaygroundControls/ShowSubmitModalCheckbox" to="." method="_on_show_submit_modal_checkbox_toggled"]
+[connection signal="text_changed" from="PlaygroundControls/Score/LineEdit" to="." method="_on_line_edit_text_changed"]
