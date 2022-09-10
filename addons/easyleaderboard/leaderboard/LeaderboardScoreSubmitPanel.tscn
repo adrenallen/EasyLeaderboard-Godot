@@ -48,7 +48,7 @@ func _on_submit_button_pressed():
 	easy_leaderboard_api.submit_leaderboard_score(score_name, score, score_metadata)
 	
 func _on_easy_leaderboard_api_score_submitted(result):
-	emit_signal(\"leaderboard_score_submitted\")
+	emit_signal(\"leaderboard_score_submitted\", result)
 "
 
 [node name="LeaderboardScoreSubmitPanel" type="Panel"]
