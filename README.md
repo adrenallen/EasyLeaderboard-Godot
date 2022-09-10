@@ -25,8 +25,7 @@ If you change the key to `garretts-game-basic-validation` then the score will un
 
 If you want more robust validation, see below!
 
-### Hosting yourself (supports custom validation/anti-cheat!)
-TODO
+### [See how to self-host here (supports custom validation/anti-cheat!)](https://github.com/adrenallen/EasyLeaderboard)
 
 ## Leaderboards Made With This
 ### [Planet Jumpers](https://ld45.garrettallen.dev/)
