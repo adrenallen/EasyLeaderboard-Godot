@@ -1,4 +1,4 @@
-# EasyLeaderboard + Godot 4
+# EasyLeaderboard + Godot 3.5
 ![EasyLeaderboard + Godot](/icon.png)
 
 #### **Add a leaderboard to your game in under 10 minutes!**
