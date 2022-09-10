@@ -11,7 +11,13 @@
 
 💸 Optional free-hosting provided at [https://lb.userdefined.io](https://lb.userdefined.io) by [User Defined](https://userdefined.io)
 
-## How to install
+## Table of Contents
+- [:wrench: How to install](#wrench-how-to-install)
+- [:package: What's included](#package-whats-included)
+- [:computer: API Configuration](#computer-api-configuration)
+- [:clipboard: Leaderboards Made With This](#clipboard-leaderboards-made-with-this)
+
+## :wrench: How to install
 1. Download the latest version from the [Releases page](https://github.com/adrenallen/EasyLeaderboard-Godot/releases)
 2. Extract the contents of the zip
 3. Copy the `/addons` folder into your Godot Project root
@@ -23,10 +29,11 @@ You should now see EasyLeaderboard as an optional node!
 
 For the drop-in leaderboard, instantiate a child scene and select the scene found at `/addons/easyleaderboard/leaderboard/Leaderboard.tscn`
 
-## What's included
+## :package: What's included
 
 ### Drop-in Ready Leadboard
 ![image](https://user-images.githubusercontent.com/9594539/189463097-842fa273-a9db-4c06-a724-e605da075ab6.png)
+
 [Found under addons/easyleaderboard/leaderboard/Leaderboard.tscn](addons/easyleaderboard/leaderboard/Leaderboard.tscn)
 
 Instantiate this scene in your game and set the game name for the quickest leaderboard setup!! (game jammers thats for you!)
@@ -57,7 +64,7 @@ This scene can be used to directly interact with the Easy Leaderboard API.
 
 Connect into the provided signals to handle when scores are submitted or results are retrieved.
 
-## API Configuration
+## :computer: API Configuration
 ### Using the User Defined hosted solution
 #### Default validation system
 You can opt-in to the default validation logic by appending "basic-validation" to your game's key name.
@@ -70,7 +77,7 @@ If you want more robust validation, see below!
 
 ### [See how to self-host here (supports custom validation/anti-cheat!)](https://github.com/adrenallen/EasyLeaderboard)
 
-## Leaderboards Made With This
+## :clipboard: Leaderboards Made With This
 ### [Planet Jumpers](https://ld45.garrettallen.dev/)
 Uses the metadata attribute to store player run information including their place of death, then shows it on the leaderboard!
 
