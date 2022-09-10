@@ -1,4 +1,4 @@
-# EasyLeaderboard + Godot
+# EasyLeaderboard + Godot 4
 ![EasyLeaderboard + Godot](/icon.png)
 
 #### **Add a leaderboard to your game in under 10 minutes!**
@@ -12,26 +12,52 @@
 💸 Optional free-hosting provided at [https://lb.userdefined.io](https://lb.userdefined.io) by [User Defined](https://userdefined.io)
 
 ## How to install
-1. Copy the `/addons` folder into your Godot project.
-2. 
+1. Download the latest version from the [Releases page](https://github.com/adrenallen/EasyLeaderboard-Godot/releases)
+2. Extract the contents of the zip
+3. Copy the `/addons` folder into your Godot Project root
+4. Open Godot
+5. Go to Project Settings, then the Plugins tab
+6. Check the enable box next to the EasyLeaderboard plugin
+
+You should now see EasyLeaderboard as an optional node!
+
+For the drop-in leaderboard, instantiate a child scene and select the scene found at `/addons/easyleaderboard/leaderboard/Leaderboard.tscn`
 
 ## What's included
 
-### EasyLeaderboard API node
-Found under `/api/EasyLeaderboard.tscn`.
+### Drop-in Ready Leadboard
+![image](https://user-images.githubusercontent.com/9594539/189463097-842fa273-a9db-4c06-a724-e605da075ab6.png)
+[Found under addons/easyleaderboard/leaderboard/Leaderboard.tscn](addons/easyleaderboard/leaderboard/Leaderboard.tscn)
 
-This scene can be used to directly interact with the Easy Leaderboard API.
+Instantiate this scene in your game and set the game name for the quickest leaderboard setup!! (game jammers thats for you!)
 
+This scene will automatically use an EasyLeaderboard API node underneath.
+
+You can pass in a custom row scene for it to use if you want to further customize the rows with things such as metadata parsing for game stats.
+
+There are a number of other configuration options you can play with such as showing different buttons and number of results per page.
+
+Connect to the main menu and new game button signals to handle when those are pressed!
+
+---
 ### Score Submission Modal
 [Found under /addons/easyleaderboard/leaderboard/LeaderboardScoreSubmitPanel.tscn](addons/easyleaderboard/leaderboard/LeaderboardScoreSubmitPanel.tscn)
 
+You can add this scene by using the instantiate child scene option, and selecting the scene.
 
+An EasyLeaderboard API nodepath must be provided for the modal to use for submitting scores.
 
-### Full Leadboard Scene
-[Found under addons/easyleaderboard/leaderboard/Leaderboard.tscn](addons/easyleaderboard/leaderboard/Leaderboard.tscn)
+Other information can be passed to the scene to pre-populate fields such as score and enable things like a cancel button.
 
+---
+### EasyLeaderboard API node
+[Found under addons/easyleaderboard/api/EasyLeaderboard.gd](addons/easyleaderboard/api/EasyLeaderboard.gd)
 
-## API Node Configuration
+This scene can be used to directly interact with the Easy Leaderboard API.
+
+Connect into the provided signals to handle when scores are submitted or results are retrieved.
+
+## API Configuration
 ### Using the User Defined hosted solution
 #### Default validation system
 You can opt-in to the default validation logic by appending "basic-validation" to your game's key name.
