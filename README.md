@@ -1,9 +1,22 @@
 # EasyLeaderboard + Godot
 ![EasyLeaderboard + Godot](/icon.png)
 
-## Features
+#### **Add a leaderboard to your game in under 10 minutes!**
 
-### EasyLeaderboard System
+🏃 Ready to go game clients make adding a leaderboard quick and easy
+
+🕵️ Extendable score validation system to protect against cheaters
+
+👨‍💻 Open source and easily setup for custom implementations
+
+💸 Optional free-hosting provided at [https://lb.userdefined.io](https://lb.userdefined.io) by [User Defined](https://userdefined.io)
+
+## How to install
+TODO
+
+## What's included
+
+### EasyLeaderboard API node
 Found under `/api/EasyLeaderboard.tscn`.
 
 This scene can be used to directly interact with the Easy Leaderboard API.
@@ -14,7 +27,7 @@ TODO
 ### Full Leadboard Scene
 TODO
 
-## Setup
+## API Node Configuration
 ### Using the User Defined hosted solution
 #### Default validation system
 You can opt-in to the default validation logic by appending "basic-validation" to your game's key name.
