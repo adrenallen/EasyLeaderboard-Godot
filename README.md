@@ -12,7 +12,8 @@
 💸 Optional free-hosting provided at [https://lb.userdefined.io](https://lb.userdefined.io) by [User Defined](https://userdefined.io)
 
 ## How to install
-TODO
+1. Copy the `/addons` folder into your Godot project.
+2. 
 
 ## What's included
 
@@ -22,10 +23,13 @@ Found under `/api/EasyLeaderboard.tscn`.
 This scene can be used to directly interact with the Easy Leaderboard API.
 
 ### Score Submission Modal
-TODO
+[Found under /addons/easyleaderboard/leaderboard/LeaderboardScoreSubmitPanel.tscn](addons/easyleaderboard/leaderboard/LeaderboardScoreSubmitPanel.tscn)
+
+
 
 ### Full Leadboard Scene
-TODO
+[Found under addons/easyleaderboard/leaderboard/Leaderboard.tscn](addons/easyleaderboard/leaderboard/Leaderboard.tscn)
+
 
 ## API Node Configuration
 ### Using the User Defined hosted solution
