@@ -52,47 +52,74 @@ func _on_easy_leaderboard_api_score_submitted(result):
 "
 
 [node name="LeaderboardScoreSubmitPanel" type="Panel"]
+margin_right = 300.0
+margin_bottom = 300.0
 script = SubResource( 1 )
 
 [node name="SubmitScoreLabel" type="Label" parent="."]
+margin_left = 91.0
+margin_top = 37.0
+margin_right = 211.0
+margin_bottom = 51.0
 text = "Submit your score!"
 
 [node name="ScoreLabel" type="Label" parent="."]
+margin_left = 78.0
+margin_top = 100.0
+margin_right = 117.0
+margin_bottom = 114.0
 text = "Score:"
 
 [node name="Value" type="Label" parent="ScoreLabel"]
+margin_left = 53.0
+margin_right = 164.0
+margin_bottom = 14.0
 text = "123456"
 
 [node name="NameLabel" type="Label" parent="."]
+margin_left = 77.0
+margin_top = 154.0
+margin_right = 119.0
+margin_bottom = 168.0
 text = "Name:"
 
 [node name="Value" type="LineEdit" parent="NameLabel"]
+margin_left = 53.0
+margin_top = -5.0
+margin_right = 167.0
+margin_bottom = 19.0
 max_length = 64
 expand_to_text_length = true
 placeholder_text = "Player 1"
 caret_blink = true
 
 [node name="GridContainer" type="GridContainer" parent="."]
+margin_left = 53.0
+margin_top = 244.0
+margin_right = 250.0
+margin_bottom = 264.0
 columns = 2
 
 [node name="SubmitContainer" type="CenterContainer" parent="GridContainer"]
-margin_right = 57.0
+margin_right = 97.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="SubmitButton" type="Button" parent="GridContainer/SubmitContainer"]
-margin_right = 57.0
+margin_left = 20.0
+margin_right = 77.0
 margin_bottom = 20.0
 text = "Submit"
 
 [node name="CancelContainer" type="CenterContainer" parent="GridContainer"]
-margin_left = 61.0
-margin_right = 115.0
+margin_left = 101.0
+margin_right = 197.0
 margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="CancelButton" type="Button" parent="GridContainer/CancelContainer"]
-margin_right = 54.0
+margin_left = 21.0
+margin_right = 75.0
 margin_bottom = 20.0
 text = "Cancel
 "
