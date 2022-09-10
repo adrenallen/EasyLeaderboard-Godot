@@ -1,67 +1,63 @@
-[gd_scene load_steps=4 format=3 uid="uid://qtd4jtukqvh3"]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource type="Script" path="res://addons/easyleaderboard/api/EasyLeaderboard.gd" id="1_pbiq6"]
-[ext_resource type="PackedScene" uid="uid://c0t0hiwfc7xfe" path="res://addons/easyleaderboard/leaderboard/LeaderboardScoreSubmitPanel.tscn" id="2_3bnnd"]
+[ext_resource path="res://addons/easyleaderboard/api/EasyLeaderboard.gd" type="Script" id=1]
+[ext_resource path="res://addons/easyleaderboard/leaderboard/LeaderboardScoreSubmitPanel.tscn" type="PackedScene" id=2]
 
-[sub_resource type="GDScript" id="GDScript_7ko77"]
+[sub_resource type="GDScript" id=3]
 script/source = "extends Control
 
 signal new_game_button_pressed
 signal main_menu_button_pressed
 
-@export var row_scene : PackedScene = preload(\"res://addons/easyleaderboard/leaderboard/LeaderboardRow.tscn\")
-@export var results_per_page = 10
-@export var current_page = 1
-@export var leaderboard_title = \"Leaderboard\"
-@export var show_new_game_button : bool = true
-@export var show_menu_button : bool = true
+export var row_scene : PackedScene = preload(\"res://addons/easyleaderboard/leaderboard/LeaderboardRow.tscn\")
+export var results_per_page = 10
+export var current_page = 1
+export var leaderboard_title = \"Leaderboard\"
+export var show_new_game_button : bool = true
+export var show_menu_button : bool = true
 
-@export var new_game_button_text : String = \"New Game\"
-@export var menu_button_text : String = \"Main Menu\"
+export var new_game_button_text : String = \"New Game\"
+export var menu_button_text : String = \"Main Menu\"
 
-# Using same defaults as the API
-@export_group(\"EasyLeaderboard API settings\")
+export var easy_leaderboard_url = EasyLeaderboard.DEFAULT_EASY_LEADERBOARD_URL 
+export var game_name = EasyLeaderboard.DEFAULT_GAME_NAME
+export var sort_results_asc = EasyLeaderboard.DEFAULT_SORT_RESULTS_ASCENDING
 
-@export var easy_leaderboard_url = EasyLeaderboard.DEFAULT_EASY_LEADERBOARD_URL 
-@export var game_name = EasyLeaderboard.DEFAULT_GAME_NAME
-@export var sort_results_asc = EasyLeaderboard.DEFAULT_SORT_RESULTS_ASCENDING
 
-@export_group(\"Submit Score Modal\")
-
-@export var show_submit_modal : bool = false :
-	set(value):
-		show_submit_modal = value
-		if is_visible_in_tree():
-			_handle_visible_panes()
+export var show_submit_modal : bool = false setget _set_show_submit_modal
+func _set_show_submit_modal(value):
+	show_submit_modal = value
+	if is_visible_in_tree():
+		_handle_visible_panes()
 			
-@export var submit_score : float = 0 :
-	set(value):
-		submit_score = value
-		if is_visible_in_tree():
-			_update_submit_score_panel_options()
-			
-@export var submit_name : String :
-	set(value):
-		submit_name = value
-		if is_visible_in_tree():
-			_update_submit_score_panel_options()
+export var submit_score : float = 0 setget _set_submit_score
+func _set_submit_score(value):
+	submit_score = value
+	if is_visible_in_tree():
+		_update_submit_score_panel_options()
+		
+export var submit_name : String setget _set_submit_name
+func _set_submit_name(value):
+	submit_name = value
+	if is_visible_in_tree():
+		_update_submit_score_panel_options()
 
-@export var submit_score_metadata = {} :
-	set(value):
-		submit_score_metadata = value
-		if is_visible_in_tree():
-			_update_submit_score_panel_options()
+export var submit_score_metadata = {} setget _set_submit_score_metadata
+func _set_submit_score_metadata(value):
+	submit_score_metadata = value
+	if is_visible_in_tree():
+		_update_submit_score_panel_options()
 
-@export var allow_cancel : bool = true :
-	set(value):
-		allow_cancel = value
-		if is_visible_in_tree():
-			_update_submit_score_panel_options()
+export var allow_cancel : bool = true setget _set_allow_cancel
+func _set_allow_cancel(value):
+	allow_cancel = value
+	if is_visible_in_tree():
+		_update_submit_score_panel_options()
 
-@onready var results_container : GridContainer = $LeaderboardPanel/ResultsGridContainer
-@onready var easy_leaderboard_api : EasyLeaderboard = $EasyLeaderboard
-@onready var prev_button : Button = $LeaderboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton
-@onready var next_button : Button = $LeaderboardPanel/HeaderGridContainer/NextButtonContainer/NextButton
+onready var results_container : GridContainer = $LeaderboardPanel/ResultsGridContainer
+onready var easy_leaderboard_api : EasyLeaderboard = $EasyLeaderboard
+onready var prev_button : Button = $LeaderboardPanel/HeaderGridContainer/PrevButtonContainer/PrevButton
+onready var next_button : Button = $LeaderboardPanel/HeaderGridContainer/NextButtonContainer/NextButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -110,7 +106,7 @@ func _on_easy_leaderboard_leaderboard_results_changed(results):
 	for result in results:
 		row_number = row_number + 1
 		
-		var row = row_scene.instantiate()
+		var row = row_scene.instance()
 		
 		row.result_number = row_number
 		row.score_name = result.name
@@ -120,7 +116,7 @@ func _on_easy_leaderboard_leaderboard_results_changed(results):
 		
 	# Add fake rows for spacing consistency
 	while results_container.get_child_count() < results_per_page:
-		var fake_row := row_scene.instantiate() as Node
+		var fake_row := row_scene.instance() as Node
 		fake_row.modulate.a = 0 # make it invisible!
 		results_container.add_child(fake_row)
 		
@@ -183,138 +179,116 @@ func _calculate_page_for_result(result):
 func _on_new_game_button_pressed():
 	$LeaderboardPanel/FooterGridContainer/MenuButtonContainer/MenuButton.disabled = true
 	$LeaderboardPanel/FooterGridContainer/NewGameButtonContainer/NewGameButton.disabled = true
-	new_game_button_pressed.emit()
+	emit_signal(\"new_game_button_pressed\")
 
 func _on_menu_button_pressed():
 	$LeaderboardPanel/FooterGridContainer/MenuButtonContainer/MenuButton.disabled = true
 	$LeaderboardPanel/FooterGridContainer/NewGameButtonContainer/NewGameButton.disabled = true
-	main_menu_button_pressed.emit()
+	emit_signal(\"main_menu_button_pressed\")
 	
 "
 
 [node name="Leaderboard" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-script = SubResource("GDScript_7ko77")
+script = SubResource( 3 )
 
 [node name="EasyLeaderboard" type="Node" parent="."]
-script = ExtResource("1_pbiq6")
+script = ExtResource( 1 )
 
 [node name="LeaderboardPanel" type="Panel" parent="."]
-layout_mode = 0
-offset_right = 643.0
-offset_bottom = 607.0
+margin_right = 650.0
+margin_bottom = 600.0
 
 [node name="HeaderGridContainer" type="GridContainer" parent="LeaderboardPanel"]
-layout_mode = 0
-offset_top = 10.0
-offset_right = 643.0
-offset_bottom = 43.0
+margin_top = 10.0
+margin_right = 649.0
+margin_bottom = 38.0
+size_flags_horizontal = 3
 columns = 3
 
 [node name="PrevButtonContainer" type="CenterContainer" parent="LeaderboardPanel/HeaderGridContainer"]
-layout_mode = 2
-offset_right = 268.0
-offset_bottom = 31.0
+margin_right = 281.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="PrevButton" type="Button" parent="LeaderboardPanel/HeaderGridContainer/PrevButtonContainer"]
-layout_mode = 2
-offset_left = 112.0
-offset_right = 155.0
-offset_bottom = 31.0
+margin_left = 120.0
+margin_right = 160.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 disabled = true
 text = "Prev"
 
 [node name="LeaderboardTitle" type="Label" parent="LeaderboardPanel/HeaderGridContainer"]
-layout_mode = 2
-offset_left = 272.0
-offset_top = 2.0
-offset_right = 372.0
-offset_bottom = 28.0
+margin_left = 285.0
+margin_top = 3.0
+margin_right = 364.0
+margin_bottom = 17.0
 text = "Leaderboard"
-horizontal_alignment = 1
 
 [node name="NextButtonContainer" type="CenterContainer" parent="LeaderboardPanel/HeaderGridContainer"]
-layout_mode = 2
-offset_left = 376.0
-offset_right = 643.0
-offset_bottom = 31.0
+margin_left = 368.0
+margin_right = 649.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="NextButton" type="Button" parent="LeaderboardPanel/HeaderGridContainer/NextButtonContainer"]
-layout_mode = 2
-offset_left = 111.0
-offset_right = 156.0
-offset_bottom = 31.0
+margin_left = 119.0
+margin_right = 161.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 disabled = true
 text = "Next"
 
 [node name="ResultsGridContainer" type="GridContainer" parent="LeaderboardPanel"]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 62.0
-offset_right = 615.0
-offset_bottom = 551.0
+margin_left = 33.0
+margin_top = 35.0
+margin_right = 616.0
+margin_bottom = 544.0
 
 [node name="CenterContainer" type="CenterContainer" parent="LeaderboardPanel/ResultsGridContainer"]
-layout_mode = 2
-offset_right = 585.0
-offset_bottom = 489.0
+margin_right = 583.0
+margin_bottom = 509.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Label" type="Label" parent="LeaderboardPanel/ResultsGridContainer/CenterContainer"]
-layout_mode = 2
-offset_left = 255.0
-offset_top = 231.0
-offset_right = 330.0
-offset_bottom = 257.0
+margin_left = 261.0
+margin_top = 247.0
+margin_right = 322.0
+margin_bottom = 261.0
 text = "Loading..."
 
 [node name="FooterGridContainer" type="GridContainer" parent="LeaderboardPanel"]
-layout_mode = 0
-offset_left = 46.0
-offset_top = 561.0
-offset_right = 598.0
-offset_bottom = 601.0
+margin_left = 3.0
+margin_top = 571.0
+margin_right = 649.0
+margin_bottom = 597.0
 columns = 2
 
 [node name="NewGameButtonContainer" type="CenterContainer" parent="LeaderboardPanel/FooterGridContainer"]
-layout_mode = 2
-offset_right = 274.0
-offset_bottom = 31.0
+margin_right = 321.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="NewGameButton" type="Button" parent="LeaderboardPanel/FooterGridContainer/NewGameButtonContainer"]
-layout_mode = 2
-offset_left = 90.0
-offset_right = 183.0
-offset_bottom = 31.0
+margin_left = 119.0
+margin_right = 201.0
+margin_bottom = 20.0
 text = "New Game"
 
 [node name="MenuButtonContainer" type="CenterContainer" parent="LeaderboardPanel/FooterGridContainer"]
-layout_mode = 2
-offset_left = 278.0
-offset_right = 552.0
-offset_bottom = 31.0
+margin_left = 325.0
+margin_right = 646.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="MenuButton" type="Button" parent="LeaderboardPanel/FooterGridContainer/MenuButtonContainer"]
-layout_mode = 2
-offset_left = 89.0
-offset_right = 185.0
-offset_bottom = 31.0
+margin_left = 119.0
+margin_right = 202.0
+margin_bottom = 20.0
 text = "Main Menu"
 
-[node name="LeaderboardScoreSubmitPanel" parent="." instance=ExtResource("2_3bnnd")]
-layout_mode = 0
-offset_left = 148.0
-offset_top = 150.0
-offset_right = 506.0
-offset_bottom = 459.0
+[node name="LeaderboardScoreSubmitPanel" parent="." instance=ExtResource( 2 )]
 easy_leaderboard_api_path = NodePath("../EasyLeaderboard")
 
 [connection signal="leaderboard_results_changed" from="EasyLeaderboard" to="." method="_on_easy_leaderboard_leaderboard_results_changed"]

@@ -1,20 +1,19 @@
-[gd_scene load_steps=2 format=3 uid="uid://c0t0hiwfc7xfe"]
+[gd_scene load_steps=2 format=2]
 
-[sub_resource type="GDScript" id="GDScript_8x26a"]
-script/source = "class_name LeaderboardScoreSubmitPanel
-extends Panel
+[sub_resource type="GDScript" id=1]
+script/source = "extends Panel
 
 signal leaderboard_score_submitted(result)
 signal leaderboard_score_canceled
 
 ## EasyLeaderboard API node
-@export_node_path(EasyLeaderboard, Node) var easy_leaderboard_api_path
-@export var score_name : String
-@export var score : float
-@export var score_metadata = {}
-@export var allow_cancel : bool = true
+export(NodePath) var easy_leaderboard_api_path
+export var score_name : String
+export var score : float
+export var score_metadata = {}
+export var allow_cancel : bool = true
 
-@onready var easy_leaderboard_api  : EasyLeaderboard = get_node(easy_leaderboard_api_path)
+onready var easy_leaderboard_api  : EasyLeaderboard = get_node(easy_leaderboard_api_path)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,10 +22,10 @@ func _ready():
 func update_panel_settings():
 	if not (easy_leaderboard_api is EasyLeaderboard):
 		push_error(\"easy_leaderboard_api_path must point to a valid EasyLeaderboard node\")
-		
-	if !easy_leaderboard_api.leaderboard_score_submitted.is_connected(_on_easy_leaderboard_api_score_submitted):
+	
+	if !easy_leaderboard_api.is_connected(\"leaderboard_score_submitted\", self, \"_on_easy_leaderboard_api_score_submitted\"):
 		# Add connection for score submit complete!
-		easy_leaderboard_api.leaderboard_score_submitted.connect(_on_easy_leaderboard_api_score_submitted)
+		easy_leaderboard_api.connect(\"leaderboard_score_submitted\", self, \"_on_easy_leaderboard_api_score_submitted\")
 		
 	$ScoreLabel/Value.text = str(score)
 	
@@ -41,7 +40,7 @@ func update_panel_settings():
 	
 
 func _on_cancel_button_pressed():
-	leaderboard_score_canceled.emit()
+	emit_signal(\"leaderboard_score_canceled\")
 
 
 func _on_submit_button_pressed():
@@ -49,81 +48,52 @@ func _on_submit_button_pressed():
 	easy_leaderboard_api.submit_leaderboard_score(score_name, score, score_metadata)
 	
 func _on_easy_leaderboard_api_score_submitted(result):
-	leaderboard_score_submitted.emit(result)
+	emit_signal(\"leaderboard_score_submitted\")
 "
 
 [node name="LeaderboardScoreSubmitPanel" type="Panel"]
-offset_left = 398.0
-offset_top = 111.0
-offset_right = 756.0
-offset_bottom = 420.0
-script = SubResource("GDScript_8x26a")
+script = SubResource( 1 )
 
 [node name="SubmitScoreLabel" type="Label" parent="."]
-offset_left = 110.0
-offset_top = 15.0
-offset_right = 255.0
-offset_bottom = 41.0
 text = "Submit your score!"
 
 [node name="ScoreLabel" type="Label" parent="."]
-offset_left = 124.0
-offset_top = 62.0
-offset_right = 172.0
-offset_bottom = 88.0
 text = "Score:"
 
 [node name="Value" type="Label" parent="ScoreLabel"]
-offset_left = 54.0
-offset_right = 94.0
-offset_bottom = 23.0
 text = "123456"
 
 [node name="NameLabel" type="Label" parent="."]
-offset_left = 68.0
-offset_top = 137.0
-offset_right = 119.0
-offset_bottom = 163.0
 text = "Name:"
 
 [node name="Value" type="LineEdit" parent="NameLabel"]
-offset_left = 68.0
-offset_top = -2.0
-offset_right = 229.0
-offset_bottom = 29.0
-placeholder_text = "Player 1"
 max_length = 64
 expand_to_text_length = true
+placeholder_text = "Player 1"
 caret_blink = true
 
 [node name="GridContainer" type="GridContainer" parent="."]
-offset_left = 80.0
-offset_top = 215.0
-offset_right = 274.0
-offset_bottom = 268.0
 columns = 2
 
 [node name="SubmitContainer" type="CenterContainer" parent="GridContainer"]
-offset_right = 95.0
-offset_bottom = 31.0
+margin_right = 57.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="SubmitButton" type="Button" parent="GridContainer/SubmitContainer"]
-offset_left = 16.0
-offset_right = 79.0
-offset_bottom = 31.0
+margin_right = 57.0
+margin_bottom = 20.0
 text = "Submit"
 
 [node name="CancelContainer" type="CenterContainer" parent="GridContainer"]
-offset_left = 99.0
-offset_right = 194.0
-offset_bottom = 31.0
+margin_left = 61.0
+margin_right = 115.0
+margin_bottom = 20.0
 size_flags_horizontal = 3
 
 [node name="CancelButton" type="Button" parent="GridContainer/CancelContainer"]
-offset_left = 17.0
-offset_right = 77.0
-offset_bottom = 31.0
+margin_right = 54.0
+margin_bottom = 20.0
 text = "Cancel
 "
 
